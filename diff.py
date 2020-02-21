@@ -1,3 +1,4 @@
+#!/home/gll/miniconda3/envs/a/bin/python
 import numpy as np
 import re
 
@@ -61,4 +62,7 @@ class vasp_file:
 
 pos = vasp_file('POSCAR')
 con = vasp_file('CONTCAR')
-print('diff between end and beginning is\n {}'.format(con.get_op_matrix()-pos.get_op_matrix()))
+print('this computition is about {}\n'.format(pos.get_title()))
+print('diff between end and beginning in atom position is\n {}'.format(con.get_op_matrix()-pos.get_op_matrix()))
+print('\n\nelements kind is {}'.format(pos.get_apnd_labl().T))
+print('\n\ndiff between end and beginning in cell change is:\n {}'.format(con.get_cell_matrix() - pos.get_cell_matrix()))
