@@ -3,7 +3,7 @@ import numpy as np
 import re
 
 class vasp_file:
-    def __init__(self, Filename, pattern=['[Ss]elective|s|S', u'[Cc]artesian|[Dd]irect', '😊']):
+    def __init__(self, Filename, pattern=['[Ss]elective|^s|^S', u'[Cc]artesian|[Dd]irect|^[DdCc]$', '😊']):
         self.Filename = Filename
         self.pattern = pattern
     def find_pattern(self, private_pattern):
