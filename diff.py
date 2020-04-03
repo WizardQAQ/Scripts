@@ -1,4 +1,3 @@
-#!/home/gll/miniconda3/envs/a/bin/python
 import numpy as np
 import re
 
@@ -60,9 +59,25 @@ class vasp_file:
         title = np.loadtxt(self.Filename, max_rows=1, dtype=str)
         return title
 
+def moved_atoms(op_matrix, label):
+    i = 0
+    atoms = {}
+    for j in op_matrix:
+        if np.sqrt(np.sum(np.power(j,2))) > 0.005:
+            atoms[i] = label[i], op_matrix[i], np.sqrt(np.sum(np.power(j,2))), i
+        i += 1
+    return atoms
+
+
 pos = vasp_file('POSCAR')
 con = vasp_file('CONTCAR')
 print('this computition is about {}\n'.format(pos.get_title()))
 print('diff between end and beginning in atom position is\n {}'.format(con.get_op_matrix()-pos.get_op_matrix()))
 print('\n\nelements kind is {}'.format(pos.get_apnd_labl().T))
 print('\n\ndiff between end and beginning in cell change is:\n {}'.format(con.get_cell_matrix() - pos.get_cell_matrix()))
+a= con.get_op_matrix()-pos.get_op_matrix()
+b =pos.get_apnd_labl()
+c = moved_atoms(a, b)
+print('\n\nthe moved atoms are:\n')
+for i in c:
+    print(c[i], sep='\b')
